@@ -1,36 +1,49 @@
-# Unipile Node.js SDK
+# Messaging (LinkedIn API, WhatsApp API,etc.) & Email API by Unipile
 
-The Node.js SDK provides you tools to interact with Unipile’s API with ease. To have more informations about how Unipile’s API works and how to use it, please take a look at the following resources.
+The Unipile Node.js SDK provides powerful tools to easily integrate with LinkedIn's API, Email API, and other platforms like WhatsApp, Instagram, and Twitter. With this SDK, you can seamlessly manage your LinkedIn connections, send messages (including InMail), retrieve profiles, handle invitations, and manage email communications—all using LinkedIn's API and the Email API. Whether you're automating LinkedIn tasks, building scalable messaging solutions across multiple platforms, or managing emails efficiently, Unipile makes it simple and effective.
 
-[Unipile API guide](https://developer.unipile.com/docs)
+<p align="center">
+  📖 <a href="https://developer.unipile.com/docs" target="_blank">Unipile API Guide</a> &nbsp;&nbsp;
+💡<a href="https://developer.unipile.com/reference" target="_blank">Unipile API Reference</a> &nbsp;&nbsp;
+  ▶️ <a href="#quick-start">Quick Start</a> &nbsp;&nbsp;
+  🗂️ <a href="#installation">Installation</a>
+  <br><br>
+💬 <a href="#linkedin-api-and-messaging-apis">Messaging API</a> &nbsp;&nbsp;
+ ✉️ <a href="#email-api">Email API</a> 
+<br><br>
+</p>
 
-[Unipile API reference](https://developer.unipile.com/reference)
+# LinkedIn API and Messaging APIs
+## Features for All APIs
 
-# Requirements
-
-Node 18 recommended
-
-# Table of Contents
-
-- [Installation](#Installation)
-- [Quick Start](#Quick_Start)
-- [Features](#Features)
-  - [Account Connection](#Account_Connection)
-  - [Messages](#Messages)
-  - [Attachments](#Attachments)
-  - [Users](#Users)
-- [LinkedIn Specific](#LinkedIn_Specific)
-  - [Invitations](#Invitations)
-  - [Posts](#Posts)
-  - [Profiles](#Profiles)
+🔸 [Account Connection](#account-connection): Generate a Hosted Auth, Implement a custom authentication<br>
+<br>
+🔸 [Message](#messages): Start a new chat, Send message, List messages in a chat, List chats, Retrieve a chat, List attendees, Retrieve a chat, List attendees, List all attendees from a chat<br>
+<br>
+🔸 [Attachment](#attachments): Send file attachments, Retrieve an attachment from a message<br>
+<br>
+🔸 [User Profile](#users): Retrieve users profiles, Retrieve my profile<br>
+<br>
+## LinkedIn Specific
+🔹 [Send InMail LinkedIn API](#inmail-linkedin-api) <br>
+<br>
+🔹 [Send Invitation LinkedIn API](#invitations-linkedin-api): Profile view notification, Send invitation, List pending invitation, Delete invitation<br>
+<br>
+🔹 [LinkedIn Posts API](#posts-linkedin-api): List Users/Companies posts, Retrieve a post, Create a new LinkedIn Post, Send Comments in LinkedIn Post, List Post Comments, Add reaction on a post<br>
+<br>
+🔹 [Profiles LinkedIn API](#profiles-linkedin-api): List of contacts/Relations, Retrieve Companies Profiles<br>
+<br>
 
 # Installation
+
+Node 18 recommended
+<br>
 
 ```
   npm install unipile-node-sdk
 ```
 
-# Quick_Start
+# Quick Start
 
 Authenticate using your Unipile account credentials
 
@@ -58,9 +71,9 @@ const response = await client.users.getCompanyProfile({
 });
 ```
 
-# Features
+# Features for All APIs
 
-## Account_Connection
+## Account Connection
 
 You can easily connect multiple accounts
 
@@ -87,38 +100,37 @@ You can easily connect multiple accounts
       password: 'your LinkedIn password',
     });
     ```
-  - Whatsapp
+  - Whatsapp API
     ```javascript
     await client.account.connectWhatsapp();
     ```
-  - Instagram
+  - Instagram API
     ```javascript
     await client.account.connectInstagram({
       username: 'your Instagram username',
       password: 'your Instagram password',
     });
     ```
-  - Messenger
+  - Messenger API
     ```javascript
     await client.account.connectMessenger({
       username: 'your Messenger username',
       password: 'your Messenger password',
     });
     ```
-  - Telegram
+  - Telegram API
     ```javascript
     await client.account.connectTelegram();
     ```
-  - X (Twitter)
+  - X (Twitter) API
     ```javascript
     await client.account.connectTwitter({
       username: 'your X username',
       password: 'your X password',
-      email : 'your@email.com'
     });
     ```
 
-- Have 2FA / OTP / In app validation security ? Solve the checkpoint
+- Have 2FA / OTP / In-app validation security ? Solve the checkpoint
   ```javascript
   await client.account.solveCodeCheckpoint({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
@@ -191,7 +203,7 @@ You can easily connect multiple accounts
   });
   ```
 
-- Retrieve a attachment from a message
+- Retrieve an attachment from a message
   ```javascript
   await client.messaging.getMessageAttachment({
     attachment_id: '5882031366722404334',
@@ -213,11 +225,12 @@ You can easily connect multiple accounts
   await client.users.getOwnProfile('t5XY4yQzR9WVrlNFyzPMhw');
   ```
 
-# LinkedIn_Specific
+# LinkedIn Specific
 
-## InMail
+## InMail LinkedIn API
 
-Send messages to people outside users’ network with InMail credits that vary by subscription level.
+Send InMail LinkedIn API
+(message to people outside users’ network)
 
 ```javascript
 await client.messaging.startNewChat({
@@ -232,9 +245,9 @@ await client.messaging.startNewChat({
 });
 ```
 
-## Invations
+## Invitations LinkedIn API
 
-- Notify user that his profile has been consulted
+- Notify LinkedIn Profile View
   ```javascript
   await client.users.getProfile({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
@@ -251,13 +264,13 @@ await client.messaging.startNewChat({
     message: 'Send invitation',
   });
   ```
-- List pending invitation
+- List pending LinkedIn invitations
   ```javascript
   await client.users.getAllInvitationsSent({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
   });
   ```
-- Delete Invitation
+- Delete LinkedIn Invitation
   ```javascript
   await client.users.cancelInvitationSent({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
@@ -265,30 +278,30 @@ await client.messaging.startNewChat({
   });
   ```
 
-## Posts
+## Posts LinkedIn API
 
-- List Users/Companies posts
+- List Users' and Companies' LinkedIn Posts
   ```javascript
   await client.users.getAllPosts({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
     identifier: 'user/company provider id',
   });
   ```
-- Retrieve a post
+- Retrieve a LinkedIn post
   ```javascript
   await client.users.getPost({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
     post_id: '7222176104768270337',
   });
   ```
-- Create a new LinkedIn Post
+- Create a LinkedIn Post
   ```javascript
   await client.users.createPost({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
     text: 'post content',
   });
   ```
-- Send Comments in LinkedIn Post
+- Send Comments on LinkedIn Post
   ```javascript
   await client.users.sendPostComment({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
@@ -296,14 +309,14 @@ await client.messaging.startNewChat({
     text: 'comment',
   });
   ```
-- List Post Comments
+- List LinkedIn Post Comments
   ```javascript
   await client.users.getAllPostComments({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
     post_id: '7222176104768270337',
   });
   ```
-- Add reaction on a post
+- Add reaction to a LinkedIn post
   ```javascript
   await client.users.sendPostReaction({
     account_id: 't5XY4yQzR9WVrlNFyzPMhw',
@@ -312,7 +325,7 @@ await client.messaging.startNewChat({
   });
   ```
 
-## Profiles
+## Profiles LinkedIn API
 
 - List of contacts/Relations
   ```javascript
@@ -327,3 +340,7 @@ await client.messaging.startNewChat({
     identifier: 'Unipile',
   });
   ```
+# EMAIL API
+## Get emails history
+## Send an email
+## Reply to an email
